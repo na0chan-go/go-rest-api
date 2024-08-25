@@ -8,7 +8,10 @@ import (
 )
 
 func main() {
-	dbConn := db.NewDB()
+	dbConn, err := db.NewDB()
+	if err != nil {
+		log.Fatalln(err)
+	}
 	defer log.Print("Successfully migrated")
 	defer db.CloseDB(dbConn)
 	dbConn.AutoMigrate(&model.User{}, &model.Task{})
